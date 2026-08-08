@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronRight, Copy, Github, Menu, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, ChevronRight, Copy, ExternalLink, Github, Menu, ShieldCheck, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import {
   auditEvents, controls, credibility, executionBoundaries, intentTypes, pipeline, principles,
@@ -7,6 +7,8 @@ import {
 } from './content';
 
 const github = 'https://github.com/atonima-labs';
+const docs = 'https://docs.atonima.com';
+const sdkPackage = 'https://www.npmjs.com/package/@atonima/sdk';
 const reveal = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: .18 }, transition: { duration: .5 } };
 const nav = [['Platform', '/#platform'], ['Architecture', '/#architecture'], ['Developers', '/#developers']];
 const products = [
@@ -24,9 +26,9 @@ export default function App() {
     <nav className="nav"><div className="shell flex h-[72px] items-center justify-between">
       <a href="/" className="flex items-center gap-3" aria-label="Atonima home"><Mark/><span className="font-semibold tracking-[-.02em]">atonima</span><span className="hidden rounded border border-white/10 px-2 py-1 font-mono text-[9px] uppercase tracking-[.15em] text-steel sm:inline">financial intent infrastructure</span></a>
       <div className="hidden items-center gap-7 lg:flex"><ProductMenu/>{nav.map(([label, href]) => <a key={label} className="nav-link" href={href}>{label}</a>)}</div>
-      <div className="hidden items-center gap-3 lg:flex"><a href={github} target="_blank" rel="noreferrer" className="icon-button" aria-label="Atonima on GitHub"><Github className="size-4"/></a><a href="#contact" className="button button-small">Build with Atonima <ArrowRight className="size-3.5"/></a></div>
+      <div className="hidden items-center gap-3 lg:flex"><a href={github} target="_blank" rel="noreferrer" className="icon-button" aria-label="Atonima on GitHub"><Github className="size-4"/></a><a href="/build" className="button button-small">Build with Atonima <ArrowRight className="size-3.5"/></a></div>
       <button className="icon-button lg:hidden" onClick={() => setMenu(v => !v)} aria-label="Toggle navigation" aria-expanded={menu}>{menu ? <X className="size-5"/> : <Menu className="size-5"/>}</button>
-    </div><AnimatePresence>{menu && <motion.div initial={{height:0, opacity:0}} animate={{height:'auto', opacity:1}} exit={{height:0, opacity:0}} className="overflow-hidden border-t border-white/10 bg-ink lg:hidden"><div className="shell py-4"><p className="py-2 font-mono text-[9px] uppercase tracking-wider text-steel">Products</p>{products.map(p=><a key={p.name} href={p.href} className="block py-2 text-sm text-cloud" onClick={() => setMenu(false)}>{p.name}</a>)}<div className="my-2 h-px bg-white/10"/>{nav.map(([label, href]) => <a key={label} href={href} className="block py-2 text-sm text-cloud" onClick={() => setMenu(false)}>{label}</a>)}<a href="/#contact" className="button mt-4 w-full" onClick={() => setMenu(false)}>Build with Atonima</a></div></motion.div>}</AnimatePresence></nav>
+    </div><AnimatePresence>{menu && <motion.div initial={{height:0, opacity:0}} animate={{height:'auto', opacity:1}} exit={{height:0, opacity:0}} className="overflow-hidden border-t border-white/10 bg-ink lg:hidden"><div className="shell py-4"><p className="py-2 font-mono text-[9px] uppercase tracking-wider text-steel">Products</p>{products.map(p=><a key={p.name} href={p.href} className="block py-2 text-sm text-cloud" onClick={() => setMenu(false)}>{p.name}</a>)}<div className="my-2 h-px bg-white/10"/>{nav.map(([label, href]) => <a key={label} href={href} className="block py-2 text-sm text-cloud" onClick={() => setMenu(false)}>{label}</a>)}<a href="/build" className="button mt-4 w-full" onClick={() => setMenu(false)}>Build with Atonima</a></div></motion.div>}</AnimatePresence></nav>
 
     <main>{path === '/' ? <>
       <Hero/>
@@ -40,7 +42,7 @@ export default function App() {
       <Audience/>
       <Vision/>
       <CTA/>
-    </> : path === '/x402' ? <X402Page/> : path === '/runtime' ? <RuntimePage/> : path === '/discovery' ? <DiscoveryPage/> : path === '/intents' ? <IntentsPage/> : <NotFound/>}</main>
+    </> : path === '/x402' ? <X402Page/> : path === '/runtime' ? <RuntimePage/> : path === '/discovery' ? <DiscoveryPage/> : path === '/intents' ? <IntentsPage/> : path === '/build' ? <BuildPage/> : <NotFound/>}</main>
     <Footer/>
   </div>;
 }
@@ -94,7 +96,85 @@ function IntentsPage(){usePageMeta('Intent Infrastructure | Atonima','Standardiz
 
 function IntentLevels(){const levels=[['01','ACTIONS','Execute once',['transfer','swap','deposit','withdraw','borrow','repay']],['02','AUTOMATIONS','Persist over time',['DCA','rebalance','distribution','recurring payment']],['03','INTENTS','Maintain an objective',['target allocation','scheduled investment','bounded API spend','approved yield']]];return <section className="section"><div className="shell"><SectionHead eyebrow="01 / Semantic model" title="A progression from calls to objectives." text="Simple actions execute once. Automations preserve an approved strategy. Higher-level intents compile financial objectives into deterministic, policy-bound plans."/><div className="mt-12 grid gap-4 lg:grid-cols-3">{levels.map(([n,h,d,items])=><article key={String(h)} className="rounded-xl border border-white/10 bg-white/[.025] p-6"><span className="font-mono text-[9px] text-steel">{String(n)}</span><h3 className="mt-8 text-xl font-semibold">{String(h)}</h3><p className="mt-2 text-sm text-signal">{String(d)}</p><div className="mt-6 flex flex-wrap gap-2">{(items as string[]).map(x=><span key={x} className="rounded border border-white/10 px-2 py-1 text-[10px] text-cloud">{x}</span>)}</div></article>)}</div></div></section>}
 
-function ProductCTA({title}:{title:string}){return <section className="bg-signal text-ink"><div className="shell flex flex-col gap-6 py-14 lg:flex-row lg:items-center lg:justify-between"><h2 className="max-w-2xl text-3xl font-semibold tracking-tight">{title}</h2><div className="flex flex-col gap-3 sm:flex-row"><a href={github} target="_blank" rel="noreferrer" className="button button-dark"><Github className="size-4"/> GitHub</a><a href="/#contact" className="button button-light">Talk to Atonima <ArrowRight className="size-4"/></a></div></div></section>}
+function ProductCTA({title}:{title:string}){return <section className="bg-signal text-ink"><div className="shell flex flex-col gap-6 py-14 lg:flex-row lg:items-center lg:justify-between"><h2 className="max-w-2xl text-3xl font-semibold tracking-tight">{title}</h2><div className="flex flex-col gap-3 sm:flex-row"><a href={github} target="_blank" rel="noreferrer" className="button button-dark"><Github className="size-4"/> GitHub</a><a href="/build" className="button button-light">Build with Atonima <ArrowRight className="size-4"/></a></div></div></section>}
+
+function BuildPage(){usePageMeta('Build with Atonima | Developer integration','Integrate delegated financial automations on Stellar with the Atonima TypeScript SDK and production API.');const flow=[['01','PROPOSE','Define the strategy, schedule, network and bounded authority.'],['02','AUTHORIZE','Create the delegated session in the connected smart-account wallet.'],['03','PAY','Prepare, sign and settle the exact USDC service payment.'],['04','ACTIVATE','Bind the on-chain policy, choose the first run and start scheduling.'],['05','OPERATE','Read state, pause, resume, cancel and revoke with an auditable lifecycle.']];const strategies=[['Dollar-cost averaging','Execute bounded Aquarius swaps on a recurring schedule with per-run and total spend limits.',['Aquarius routing','Slippage bounds','Recipient allowlist']],['Portfolio rebalancing','Value allowed assets, compare target weights and submit at most one corrective trade per check.',['Basis-point targets','Threshold checks','Bounded trade size']],['Token disbursement','Send one-time or repeating token distributions to a fixed, policy-approved recipient set.',['1–100 recipients','Exact base units','One-time or recurring']]];return <>
+  <section className="border-b border-slate-200 bg-[#f3f6fa] pt-[72px] text-ink"><div className="shell py-16 sm:py-20"><motion.div initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end"><div><div className="mb-7 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[.14em] text-slate-600"><span className="rounded bg-ink px-2.5 py-1.5 text-signal">Developer workspace</span><span>/</span><span>Atonima Core</span><span>/</span><span>SDK v0.2</span></div><h1 className="max-w-5xl text-4xl font-semibold leading-[1.02] tracking-[-.045em] sm:text-5xl lg:text-6xl">Build a financial automation.<br/><span className="text-blue-700">Keep its authority bounded.</span></h1><p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">A practical integration guide for wallets, applications and agents using delegated sessions on Stellar.</p></div><div className="flex flex-col gap-3 sm:flex-row lg:flex-col"><a href={docs} target="_blank" rel="noreferrer" className="button bg-ink text-white hover:bg-slate-800">Technical documentation <ExternalLink className="size-4"/></a><a href={sdkPackage} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-between gap-8 rounded-lg border border-slate-300 bg-white px-5 font-mono text-xs font-semibold text-ink transition hover:border-blue-600"><span>pnpm add @atonima/sdk</span><ExternalLink className="size-3.5 text-blue-700"/></a></div></motion.div><div className="mt-12 grid overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm md:grid-cols-[1fr_1fr_1fr_auto]"><div className="border-b border-slate-200 p-5 md:border-b-0 md:border-r"><span className="block font-mono text-[9px] uppercase tracking-wider text-slate-600">Runtime</span><b className="mt-2 block text-sm">Browser or Node.js 18+</b></div><div className="border-b border-slate-200 p-5 md:border-b-0 md:border-r"><span className="block font-mono text-[9px] uppercase tracking-wider text-slate-600">Networks</span><b className="mt-2 block text-sm">Stellar testnet + public</b></div><div className="border-b border-slate-200 p-5 md:border-b-0 md:border-r"><span className="block font-mono text-[9px] uppercase tracking-wider text-slate-600">Strategies</span><b className="mt-2 block text-sm">DCA · Rebalance · Disburse</b></div><a href={`${github}/atonima-core`} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 bg-slate-50 px-6 py-5 text-sm font-semibold hover:bg-slate-100"><Github className="size-4"/> Source</a></div></div></section>
+  <section className="section bg-paper text-ink"><div className="shell"><SectionHead light eyebrow="01 / Integration lifecycle" title="From proposal to scheduled execution." text="The API owns automation state and telemetry. Your wallet owns creation and revocation of the delegated on-chain session, keeping authority visible at the correct boundary."/><div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 md:grid-cols-5">{flow.map(([n,h,t])=><article key={h} className="bg-white p-6"><span className="font-mono text-[9px] text-blue-700">{n}</span><h3 className="mt-8 font-mono text-xs font-semibold">{h}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{t}</p></article>)}</div><div className="mt-6 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50 p-5 text-sm leading-6 text-slate-700"><ShieldCheck className="mt-0.5 size-5 shrink-0 text-blue-700"/><p><b className="text-ink">Two systems, one explicit contract.</b> Atonima is authoritative for proposal, payment, scheduling, run counts and lifecycle. The integrating wallet remains authoritative for delegated session authorization.</p></div></div></section>
+  <section className="section"><div className="shell"><SectionHead eyebrow="02 / Strategy implementations" title="Three policies. Three concrete proposal shapes." text="These TypeScript examples follow the production SDK contract: base-unit amount strings, finite run limits, ledger bounds and strategy-specific authorization constraints."/><div className="mt-12 grid gap-4 lg:grid-cols-3">{strategies.map(([name,text,tags])=><article key={name as string} className="rounded-xl border border-white/10 bg-white/[.025] p-5"><h3 className="font-semibold">{name as string}</h3><p className="mt-2 text-sm leading-6 text-cloud">{text as string}</p><div className="mt-4 flex flex-wrap gap-2">{(tags as string[]).map(tag=><span key={tag} className="rounded border border-white/10 px-2 py-1 font-mono text-[9px] text-steel">{tag}</span>)}</div></article>)}</div><StrategyExamples/></div></section>
+  <section className="section bg-paper text-ink"><div className="shell grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-24"><div><SectionHead light eyebrow="03 / Operational model" title="Designed for the full lifecycle—not only the happy path." text="Production integrations can inspect derived state and remaining runs, recover idempotently, and separate reversible scheduling controls from cryptographic revocation."/><a href={docs} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-blue-700">Explore API and SDK references <ExternalLink className="size-4"/></a></div><div className="grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2">{[['Inspectable state','PROPOSED, PAYMENT_REQUIRED, READY_TO_ACTIVATE, ACTIVE, PAUSED and terminal outcomes.'],['Safe retries','Payment settlement and activation are idempotent; scheduled runs use deterministic keys.'],['Explicit controls','Pause and resume scheduling, cancel API execution, and revoke authority on-chain when required.'],['Operational evidence','Track next and last runs, spend totals, transaction hashes, failures and payment status.']].map(([h,t])=><article key={h} className="bg-white p-6"><h3 className="font-semibold">{h}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{t}</p></article>)}</div></div></section>
+  <section className="bg-signal text-ink"><div className="shell grid gap-8 py-16 lg:grid-cols-[1fr_auto] lg:items-center"><div><span className="mb-3 block font-mono text-[10px] font-bold uppercase tracking-[.18em]">Ready to integrate?</span><h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">Take the SDK path—or design the right boundary with us.</h2></div><div className="flex flex-col gap-3 sm:flex-row"><a href={docs} target="_blank" rel="noreferrer" className="button button-dark"><BookOpen className="size-4"/> Open documentation</a><a href="mailto:hello@atonima.com?subject=Build%20with%20Atonima" className="button button-light">Talk to the team <ArrowRight className="size-4"/></a></div></div></section>
+  </>}
+
+function StrategyExamples(){const [active,setActive]=useState<'DCA'|'REBALANCE'|'DISBURSEMENT'>('DCA');const [copied,setCopied]=useState(false);const shared=`import { Atonima } from "@atonima/sdk";
+
+Atonima.configure({ environment: "PRODUCTION" });
+
+const currentLedger = 64_000_000; // Read from Stellar RPC
+const common = {
+  network: "PUBLIC" as const,
+  walletAddress: "C_YOUR_SMART_ACCOUNT",
+  validAfterLedger: currentLedger + 5,
+  expiresAtLedger: currentLedger + 17_280,
+};`;
+const examples={DCA:`${shared}
+
+const proposal = await Atonima.propose({
+  ...common,
+  type: "DCA",
+  maxUses: 12,
+  schedule: { kind: "INTERVAL", expression: "1 week", timezone: "UTC" },
+  strategy: {
+    protocol: {
+      name: "AQUARIUS",
+      contractId: "C_AQUARIUS_ROUTER",
+      functionName: "swap_chained",
+    },
+    inputAsset: "C_USDC_TOKEN",
+    outputAsset: "C_XLM_TOKEN",
+    amountPerRun: "250000000", // 25 USDC at 7 decimals
+    maxTotalAmount: "3000000000",
+    slippageBps: 100,
+    spendRecipients: ["C_AQUARIUS_ROUTER"],
+  },
+});`,REBALANCE:`${shared}
+
+const proposal = await Atonima.propose({
+  ...common,
+  type: "REBALANCE",
+  maxUses: 24,
+  schedule: { kind: "INTERVAL", expression: "1 day", timezone: "UTC" },
+  strategy: {
+    protocol: {
+      name: "AQUARIUS",
+      contractId: "C_AQUARIUS_ROUTER",
+      functionName: "swap_chained",
+    },
+    allowedAssets: ["C_USDC_TOKEN", "C_XLM_TOKEN"],
+    targetWeightsBps: [6000, 4000], // Must total 10,000
+    rebalanceThresholdBps: 500,
+    slippageBps: 100,
+    maxTradeAmount: "1000000000",
+    maxTotalAmount: "24000000000",
+    spendRecipients: ["C_AQUARIUS_ROUTER"],
+  },
+});`,DISBURSEMENT:`${shared}
+
+const proposal = await Atonima.propose({
+  ...common,
+  type: "DISBURSEMENT",
+  maxUses: 1,
+  // A one-time run still uses an interval schedule; maxUses makes it run once.
+  schedule: { kind: "INTERVAL", expression: "1 year", timezone: "UTC" },
+  strategy: {
+    asset: "C_USDC_TOKEN",
+    repeat: false,
+    recipients: [
+      { address: "G_FIRST_RECIPIENT", amount: "250000000" },
+      { address: "C_SECOND_RECIPIENT", amount: "100000000" },
+    ],
+  },
+});`};const code=examples[active];return <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#080b10]"><div className="flex flex-col justify-between gap-3 border-b border-white/10 p-3 sm:flex-row sm:items-center"><div className="flex overflow-x-auto" aria-label="Strategy example">{(['DCA','REBALANCE','DISBURSEMENT'] as const).map(item=><button key={item} aria-pressed={active===item} onClick={()=>setActive(item)} className={`rounded-lg px-4 py-2.5 font-mono text-[10px] font-semibold transition ${active===item?'bg-signal text-ink':'text-steel hover:bg-white/[.05] hover:text-white'}`}>{item}</button>)}</div><button aria-live="polite" onClick={()=>{navigator.clipboard?.writeText(code);setCopied(true);setTimeout(()=>setCopied(false),1500)}} className="flex items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 font-mono text-[10px] text-cloud hover:text-white"><Copy className="size-3"/>{copied?'Copied':'Copy example'}</button></div><div className="grid lg:grid-cols-[1fr_250px]"><pre className="max-h-[680px] overflow-auto p-6 font-mono text-[11px] leading-6 text-[#c5cfdd] sm:p-8"><code>{code}</code></pre><aside className="border-t border-white/10 bg-white/[.025] p-6 lg:border-l lg:border-t-0"><span className="font-mono text-[9px] uppercase tracking-wider text-signal">Implementation notes</span><ul className="mt-5 space-y-4 text-xs leading-5 text-cloud">{active==='DCA'?<><li>Per-run and lifetime limits are bound into the session policy.</li><li>The router and <code>swap_chained</code> function must match the selected network.</li></>:active==='REBALANCE'?<><li>Weights use basis points and must total exactly 10,000.</li><li>An in-threshold check is skipped without consuming a session use.</li></>:<><li>Amounts are token base-unit strings—never floating-point decimals.</li><li>Recipients are fixed when the delegated policy is created.</li></>}</ul><a href={docs} target="_blank" rel="noreferrer" className="mt-7 inline-flex items-center gap-1 text-xs font-semibold text-signal">Full API reference <ExternalLink className="size-3"/></a></aside></div></div>}
 
 function NotFound(){usePageMeta('Page not found | Atonima','The requested Atonima page could not be found.');return <section className="hero-grid flex min-h-[calc(100vh-200px)] items-center pt-[72px]"><div className="shell py-24"><span className="font-mono text-sm text-signal">ERROR / 404</span><h1 className="mt-6 max-w-3xl text-5xl font-semibold tracking-[-.05em] sm:text-7xl">This route has no execution plan.</h1><p className="mt-6 max-w-xl text-lg leading-8 text-cloud">The requested page does not exist or has moved. No action was taken.</p><div className="mt-9 flex flex-col gap-3 sm:flex-row"><a href="/" className="button"><ArrowLeft className="size-4"/> Return home</a><a href="/x402" className="button button-ghost">Explore x402</a></div></div></section>}
 
@@ -149,4 +229,4 @@ function Vision(){return <section className="section"><div className="shell grid
 
 function CTA(){return <section id="contact" className="bg-signal text-ink"><div className="shell grid gap-8 py-16 lg:grid-cols-[1fr_auto] lg:items-center"><div><span className="mb-3 block font-mono text-[10px] font-bold uppercase tracking-[.18em]">Build controlled financial autonomy</span><h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">If your agents can move value, their authority should be explicit.</h2></div><div className="flex flex-col gap-3 sm:flex-row"><a href={github} target="_blank" rel="noreferrer" className="button button-dark"><Github className="size-4"/> Explore the repository</a><a href="mailto:hello@atonima.com?subject=Build%20with%20Atonima" className="button button-light">Start a conversation <ArrowRight className="size-4"/></a></div></div></section>}
 
-function Footer(){return <footer className="border-t border-white/8 bg-[#07090d]"><div className="shell py-12"><div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]"><div><div className="flex items-center gap-3"><Mark/><b>atonima</b></div><p className="mt-4 max-w-sm text-sm leading-6 text-steel">Verification and control infrastructure for agent-generated financial actions.</p></div><div><b className="footer-head">Platform</b><div className="mt-4 space-y-3">{nav.slice(0,3).map(([l,h])=><a className="footer-link" href={h} key={l}>{l}</a>)}</div></div><div><b className="footer-head">Connect</b><div className="mt-4 space-y-3"><a className="footer-link" href={github} target="_blank" rel="noreferrer">GitHub <ChevronRight className="size-3"/></a><a className="footer-link" href="mailto:hello@atonima.com">Contact <ChevronRight className="size-3"/></a></div></div></div><div className="mt-12 flex flex-col gap-3 border-t border-white/8 pt-6 text-[11px] text-steel sm:flex-row sm:justify-between"><p>© 2026 Atonima Labs. All rights reserved.</p><p>Stellar-first · Infrastructure-agnostic by design</p></div></div></footer>}
+function Footer(){return <footer className="border-t border-white/8 bg-[#07090d]"><div className="shell py-12"><div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]"><div><div className="flex items-center gap-3"><Mark/><b>atonima</b></div><p className="mt-4 max-w-sm text-sm leading-6 text-steel">Verification and control infrastructure for agent-generated financial actions.</p></div><div><b className="footer-head">Platform</b><div className="mt-4 space-y-3">{nav.slice(0,3).map(([l,h])=><a className="footer-link" href={h} key={l}>{l}</a>)}<a className="footer-link" href="/build">Build with Atonima</a></div></div><div><b className="footer-head">Connect</b><div className="mt-4 space-y-3"><a className="footer-link" href={docs} target="_blank" rel="noreferrer">Documentation <ChevronRight className="size-3"/></a><a className="footer-link" href={sdkPackage} target="_blank" rel="noreferrer">SDK on npm <ChevronRight className="size-3"/></a><a className="footer-link" href={github} target="_blank" rel="noreferrer">GitHub <ChevronRight className="size-3"/></a><a className="footer-link" href="mailto:hello@atonima.com">Contact <ChevronRight className="size-3"/></a></div></div></div><div className="mt-12 flex flex-col gap-3 border-t border-white/8 pt-6 text-[11px] text-steel sm:flex-row sm:justify-between"><p>© 2026 Atonima Labs. All rights reserved.</p><p>Stellar-first · Infrastructure-agnostic by design</p></div></div></footer>}
