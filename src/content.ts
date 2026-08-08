@@ -21,7 +21,7 @@ export const controls = [
   { icon: ScrollText, title: 'End-to-end attribution', text: 'Intent, policy version, approval and transaction reference share one audit context.' },
 ];
 
-export const intentTypes = ['Transfer', 'Swap', 'Disbursement', 'Contract call', 'Treasury action'];
+export const intentTypes = ['Transfer', 'Swap', 'Deposit', 'DCA', 'Rebalance', 'Distribute'];
 
 export const x402Tracks = [
   { icon: ServerCog, id: '01', title: 'Facilitator', text: 'A self-hostable and managed Stellar facilitator for verify, settle and supported on testnet and pubnet.', tags: ['@x402/stellar', 'SEP-41', 'Fee sponsorship'] },

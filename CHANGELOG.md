@@ -9,6 +9,22 @@
 - Replaced the restrictive “does not replace the financial stack” block with an execution-boundary statement that accurately includes compiling, simulating, sponsoring, submitting, and monitoring approved on-chain actions.
 - Clarified that Atonima is non-custodial and policy-bound while connected networks and financial rails perform settlement.
 
+### API, SDK, discovery, and Skills architecture
+
+- Reframed the core integration surface around a remote HTTPS API and SDK rather than a CLI-first workflow.
+- Clarified that standard integrations do not require the Stellar CLI or a locally installed Stellar SDK.
+- Added semantic one-time actions, persistent automations, and higher-level financial intents as three distinct product layers.
+- Added the internal execution sequence covering protocol resolution, contract/function mapping, argument construction, Stellar RPC simulation, authorization, XDR assembly, sponsored submission, and confirmation.
+- Kept XDR available as optional advanced output rather than the normal agent interface.
+- Clarified the separation between Atonima financial execution and signer/account providers, including SocketFi as a smart-account authorization option.
+- Added `/discovery` as a first-class product route and included it in product navigation and the sitemap.
+- Added protocol, capability, asset, action-schema, contract, and underlying-function discovery concepts.
+- Added evidence-based verification states and fields including interface match, protocol version, last-checked ledger, risk, and warnings.
+- Added the preferred agent flow: discover, describe, quote, preview, validate, execute, and verify.
+- Added Skills positioning that teaches agents when to use Atonima capabilities without teaching raw contract invocation, ScVal encoding, or XDR construction.
+- Added homepage API/SDK and Discovery/Skills presentation plus semantic SDK examples.
+- Reviewed Stellar CLI issue #2628 and positioned Atonima as a complementary semantic API platform rather than a duplicate agent-oriented CLI.
+
 ### Product navigation and routes
 
 - Replaced the top-level Stellar x402 navigation label with an accessible Products menu.
