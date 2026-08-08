@@ -1,5 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap');
-@tailwind base; @tailwind components; @tailwind utilities;
-@layer base { html{scroll-behavior:smooth} body{@apply m-0 bg-canvas text-ink antialiased} button,a{@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2} }
-@layer components { .shell{@apply mx-auto w-full max-w-6xl px-5 sm:px-8} .section{@apply py-20 sm:py-28 lg:py-32} .eyebrow{@apply mb-4 block font-mono text-xs font-medium uppercase tracking-[.2em] text-brand} .headline{@apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl} .muted{@apply text-slate-500} .card{@apply rounded-2xl border border-slate-200/80 bg-white} .btn{@apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-7 text-sm font-semibold transition} .btn-primary{@apply btn bg-brand text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-500} .btn-secondary{@apply btn border border-slate-200 bg-white hover:border-indigo-300 hover:text-brand} }
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: dark; }
+  html { scroll-behavior: smooth; }
+  body { @apply m-0 bg-ink font-sans text-white antialiased; }
+  ::selection { @apply bg-signal text-ink; }
+  button, a { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-ink; }
+}
+
+@layer components {
+  .shell { @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-10; }
+  .section { @apply py-20 sm:py-28 lg:py-32; }
+  .nav { @apply fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur-xl; }
+  .nav-link { @apply text-xs font-medium text-cloud transition hover:text-white; }
+  .eyebrow { @apply mb-4 block font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-blue-700; }
+  .bg-ink .eyebrow, .x402-grid .eyebrow { @apply text-signal; }
+  .section-title { @apply text-3xl font-semibold leading-[1.08] tracking-[-.035em] sm:text-4xl lg:text-5xl; }
+  .hero-title { @apply max-w-3xl text-5xl font-semibold leading-[.98] tracking-[-.055em] sm:text-6xl lg:text-[72px]; }
+  .hero-title span { @apply text-signal; }
+  .button { @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-signal px-6 text-sm font-semibold text-ink transition duration-200 hover:-translate-y-0.5 hover:bg-[#b9ff43]; }
+  .button-small { @apply min-h-10 px-4 text-xs; }
+  .button-ghost { @apply border border-white/15 bg-white/[.04] text-white hover:bg-white/[.08]; }
+  .button-dark { @apply bg-ink text-white hover:bg-slate-900; }
+  .button-light { @apply border border-ink/20 bg-transparent hover:bg-black/5; }
+  .icon-button { @apply grid size-10 place-items-center rounded-lg border border-white/10 text-cloud transition hover:border-white/20 hover:text-white; }
+  .status-pill { @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[.04] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[.12em] text-cloud; }
+  .pulse { @apply size-1.5 rounded-full bg-signal shadow-[0_0_0_4px_rgba(163,230,53,.12)]; }
+  .terminal-wrap { @apply overflow-hidden rounded-2xl border border-white/10 bg-[#090c12] shadow-2xl shadow-black/30; }
+  .terminal-bar { @apply flex items-center justify-between border-b border-white/10 bg-white/[.03] px-4 py-3 font-mono text-[9px] uppercase tracking-wider text-steel; }
+  .terminal-bar i { @apply size-1.5 rounded-full bg-white/20; }
+  .code-label { @apply mb-3 font-mono text-[9px] font-semibold tracking-[.18em] text-steel; }
+  .code-block { @apply overflow-x-auto font-mono text-[11px] leading-6 text-[#c5cfdd]; }
+  .terminal-row { @apply grid grid-cols-[28px_1fr_auto] items-center gap-3 font-mono text-[10px]; }
+  .terminal-row > span { @apply text-steel; }
+  .terminal-row > b { @apply font-medium text-cloud; }
+  .terminal-row em { @apply rounded px-2 py-1 not-italic; }
+  .terminal-row .ok { @apply bg-signal/10 text-signal; }
+  .terminal-row .pending { @apply bg-amber-300/10 text-amber-300; }
+  .module-card { @apply rounded-xl border border-white/10 bg-white/[.025] p-6 transition hover:-translate-y-1 hover:border-signal/30 hover:bg-white/[.045]; }
+  .module-number { @apply font-mono text-[10px] text-steel; }
+  .x402-card { @apply rounded-xl border border-white/10 bg-[#0a0d13]/80 p-6 shadow-xl shadow-black/10; }
+  .x402-card span { @apply rounded border border-white/10 px-2 py-1 font-mono text-[9px] text-steel; }
+  .footer-head { @apply font-mono text-[10px] uppercase tracking-[.16em] text-cloud; }
+  .footer-link { @apply flex w-fit items-center gap-1 text-sm text-steel transition hover:text-white; }
+  .product-popover { @apply invisible absolute left-1/2 top-[62px] w-[340px] -translate-x-1/2 translate-y-2 rounded-xl border border-white/10 bg-[#0d1119] p-2 opacity-0 shadow-2xl shadow-black/40 transition; }
+  .product-menu:hover .product-popover, .product-menu:focus-within .product-popover { @apply visible translate-y-0 opacity-100; }
+  .product-popover a { @apply block rounded-lg p-3 transition hover:bg-white/[.05]; }
+  .product-popover b { @apply block text-sm font-medium text-white; }
+  .product-popover span { @apply mt-1 block text-xs text-steel; }
+  .mark { @apply relative grid size-8 place-items-center rounded-lg border border-signal/40 bg-signal/10; }
+  .mark > span { @apply block size-3.5 rotate-45 rounded-[2px] border border-signal; }
+  .mark > i { @apply absolute block size-1.5 rounded-full bg-signal; }
+}
+
+.hero-grid { background-image: radial-gradient(circle at 75% 40%, rgba(37,99,235,.16), transparent 32%), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: auto, 56px 56px, 56px 56px; }
+.x402-grid { background-color:#0b0e14; background-image: linear-gradient(rgba(163,230,53,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(163,230,53,.035) 1px, transparent 1px); background-size:48px 48px; }
+.product-hero { @apply border-b border-white/10; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms!important; animation-iteration-count: 1!important; transition-duration: .01ms!important; } }
