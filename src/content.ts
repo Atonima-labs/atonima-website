@@ -1,8 +1,68 @@
-import { AlertTriangle, Building2, CheckCircle2, Coins, CreditCard, Eye, Fingerprint, GitBranch, KeyRound, Landmark, Lock, MessageCircle, Scale, Settings, Shield, ShieldCheck, Store, UserCheck, Wallet, Zap } from 'lucide-react';
-export const risks=[{icon:Shield,label:'Unauthorized Transactions',desc:'Agents executing payments outside sanctioned boundaries.'},{icon:AlertTriangle,label:'Policy Violations',desc:'No enforcement layer to prevent rule-breaking actions.'},{icon:Scale,label:'Operational Mistakes',desc:'Errors without human review or approval checkpoints.'},{icon:Eye,label:'Lack of Accountability',desc:'No clear record of who or what triggered each action.'},{icon:Lock,label:'Compliance Challenges',desc:'Audit trails are absent or unstructured for regulators.'}];
-export const pillars=[{icon:Fingerprint,title:'Agent Registry',desc:'Create and manage AI agents with verified identities, assigned owners, wallets, and governance profiles.'},{icon:ShieldCheck,title:'Policy Engine',desc:'Define transaction limits, approved counterparties, and approval requirements.'},{icon:MessageCircle,title:'Human vs Agent Attribution',desc:'Every action is labeled hu_tx or ai_tx at origin for complete accountability.'},{icon:Wallet,title:'Audit & Oversight',desc:'Monitor agent activity, approvals, rejected actions, policy violations, and history.'}];
-export const modules=[{icon:Fingerprint,title:'Agent Identity Layer',items:['Manage authorized financial agents','Assign owners, wallets, and governance profiles','Unique identity and permission scope']},{icon:Shield,title:'Policy & Permissions Engine',items:['Define what agents can and cannot do','Set transaction, counterparty, and time rules','Real-time pre-execution enforcement']},{icon:MessageCircle,title:'Transaction Attribution Layer',items:['Track human and AI actions at origin','hu_tx or ai_tx — every time','Full operational accountability']},{icon:Wallet,title:'Audit & Governance Layer',items:['Review actions and compliance records','Compliance-ready logs','Policy violation alerts']},{icon:UserCheck,title:'Human Approval Workflows',items:['Require sign-off for high-risk actions','Configurable thresholds and escalation','Mobile and email notifications']}];
-export const steps=[{icon:Building2,title:'Connect Organization',desc:'Connect your wallet and environment.'},{icon:UserCheck,title:'Create AI Agent',desc:'Define purpose and permissions.'},{icon:Settings,title:'Set Policies',desc:'Configure limits and approvals.'},{icon:Zap,title:'Agent Executes',desc:'The agent requests a financial action.'},{icon:ShieldCheck,title:'Atonima Verifies',desc:'Policies and permissions are evaluated.'},{icon:CheckCircle2,title:'Approve or Block',desc:'Actions proceed or are blocked and logged.'}];
-export const cases=[{icon:Landmark,title:'Treasury Management',desc:'An AI treasury agent monitors balances and initiates approved payments within defined limits.',tags:['Policy Enforcement','Payment Limits','Human Approval']},{icon:Store,title:'Vendor Payments',desc:'An agent pays approved vendors while maintaining a complete audit trail.',tags:['Approved Vendors','Audit Trail','Attribution']},{icon:Coins,title:'Stablecoin Operations',desc:'Automate stablecoin treasury operations with oversight and compliance records.',tags:['Stablecoins','Compliance','Oversight']},{icon:GitBranch,title:'Financial Workflows',desc:'Automate repetitive tasks while remaining governed, attributable, and auditable.',tags:['Automation','Governance','Auditability']}];
-export const teams=[{icon:Landmark,title:'Fintech Companies'},{icon:Coins,title:'Treasury Teams'},{icon:Store,title:'Stablecoin Platforms'},{icon:CreditCard,title:'Payments Companies'},{icon:Building2,title:'Financial Institutions'}];
-export const security=[{icon:ShieldCheck,title:'Zero-Knowledge Identity Proofs',desc:'Verify credentials without revealing underlying data.'},{icon:KeyRound,title:'User-Controlled Permissions',desc:'Define exactly what data each agent can access.'},{icon:Lock,title:'Encrypted Agent Communication',desc:'Protect communication from interception and tampering.'},{icon:Eye,title:'Minimal Data Exposure',desc:'Selective disclosure is the default.'}];
+import {
+  Activity, Binary, BookOpenCheck, Bot, Braces, CheckCircle2, CircleDollarSign,
+  Compass, DatabaseZap, FileCheck2, Fingerprint, Gauge, GitPullRequest, KeyRound,
+  Layers3, LockKeyhole, Network, PackageOpen, Radar, ScanSearch, ScrollText,
+  ServerCog, ShieldCheck, SlidersHorizontal, Sparkles, TimerReset, Workflow,
+} from 'lucide-react';
+
+export const pipeline = [
+  { icon: Braces, name: 'Validate', question: 'Is the intent structurally valid?', detail: 'Canonical schemas, strict field validation, normalized amounts and identifiers.' },
+  { icon: SlidersHorizontal, name: 'Authorize', question: 'Is this action permitted?', detail: 'Action, asset, protocol, destination, volume and delegation policies.' },
+  { icon: ShieldCheck, name: 'Decide', question: 'Can it proceed?', detail: 'A deterministic ALLOW, DENY or REQUIRE_APPROVAL decision.' },
+  { icon: Binary, name: 'Compile', question: 'How should it execute?', detail: 'Approved intent becomes a constrained, protocol-specific execution plan.' },
+  { icon: Fingerprint, name: 'Attribute', question: 'Who authorized it?', detail: 'Origin, authority, intent hash, policy and approval context stay linked.' },
+  { icon: Activity, name: 'Observe', question: 'Can every step be reconstructed?', detail: 'Correlated lifecycle events from receipt through settlement outcome.' },
+];
+
+export const controls = [
+  { icon: LockKeyhole, title: 'Fail-closed validation', text: 'Unknown fields, unsupported actions and malformed values are rejected by default.' },
+  { icon: KeyRound, title: 'Bounded authority', text: 'Agents never decide their own permissions or expand a user-approved scope.' },
+  { icon: Workflow, title: 'Deterministic compilation', text: 'Agents state outcomes. Atonima constructs the approved execution plan.' },
+  { icon: ScrollText, title: 'End-to-end attribution', text: 'Intent, policy version, approval and transaction reference share one audit context.' },
+];
+
+export const intentTypes = ['Transfer', 'Swap', 'Deposit', 'DCA', 'Rebalance', 'Distribute'];
+
+export const x402Tracks = [
+  { icon: ServerCog, id: '01', title: 'Facilitator', text: 'A self-hostable and managed Stellar facilitator for verify, settle and supported on testnet and pubnet.', tags: ['@x402/stellar', 'SEP-41', 'Fee sponsorship'] },
+  { icon: ScanSearch, id: '02', title: 'Stellar Bazaar', text: 'Catalog, natural-language search and automatic discovery for paid HTTP resources and MCP tools.', tags: ['Catalog', 'Ranking', 'Auto-indexing'] },
+  { icon: Bot, id: '03', title: 'Agent interface', text: 'An MCP server that wraps discovery, payment authorization and the retry flow behind structured tools.', tags: ['MCP', 'Paid-call proxy', 'Typed errors'] },
+  { icon: CircleDollarSign, id: '04', title: 'Exact + upto', text: 'Exact settlement plus an upstream Stellar upto scheme for bounded, metered agent spending.', tags: ['Auth entries', 'Usage billing', 'Upstream spec'] },
+  { icon: BookOpenCheck, id: '05', title: 'Adoption kit', text: 'Seller, buyer and operator paths, SDK helpers, live examples and role-based documentation.', tags: ['Under one hour', 'Examples', 'Developer guide'] },
+  { icon: FileCheck2, id: '06', title: 'Conformance + audit', text: 'Wire-level e2e coverage, published settlement evidence, threat modeling and third-party review readiness.', tags: ['Both networks', 'Canonical client', 'Audit Bank'] },
+];
+
+export const principles = [
+  { icon: PackageOpen, title: 'Open by default', text: 'Permissive licensing and a first-class self-hosted path prevent operator lock-in.' },
+  { icon: GitPullRequest, title: 'Upstream, not parallel', text: 'Build on @x402/stellar and contribute the upto scheme through the x402 process.' },
+  { icon: Network, title: 'Interoperable discovery', text: 'Stellar listings remain compatible with the wider x402 discovery ecosystem.' },
+  { icon: Radar, title: 'Conformance continuously', text: 'Track evolving discovery conventions with regression tests and documented upkeep.' },
+];
+
+export const users = [
+  { icon: Bot, title: 'Agent builders', text: 'Give agents a safe, structured way to request financial outcomes.' },
+  { icon: Layers3, title: 'Financial applications', text: 'Add agent workflows without rebuilding policy, approval and audit infrastructure.' },
+  { icon: Gauge, title: 'Treasury teams', text: 'Automate bounded transfers, swaps, disbursements and recurring strategies.' },
+  { icon: Compass, title: 'x402 sellers', text: 'Make paid Stellar services discoverable and legible to autonomous buyers.' },
+  { icon: DatabaseZap, title: 'Infrastructure operators', text: 'Run the control and payment layers with clear observability and runbooks.' },
+  { icon: Sparkles, title: 'Ecosystem partners', text: 'Extend a common intent, attribution and discovery standard across applications.' },
+];
+
+export const auditEvents = [
+  ['10:42:07.118', 'intent.received', 'treasury-agent-01', 'neutral'],
+  ['10:42:07.123', 'intent.validated', 'schema/transfer@1', 'good'],
+  ['10:42:07.129', 'policy.evaluated', 'treasury-policy-v2', 'neutral'],
+  ['10:42:07.131', 'policy.approval_required', 'amount > 250 USDC', 'warn'],
+  ['10:44:18.904', 'approval.granted', 'intent_hash: 8ac7…e19f', 'good'],
+  ['10:44:18.927', 'intent.compiled', 'stellar-testnet', 'good'],
+];
+
+export const executionBoundaries = ['Non-custodial by design', 'Policy-bound execution', 'Infrastructure interoperable', 'Settlement through connected rails', 'Explicit execution authority'];
+
+export const runtimeStates = ['SKIPPED', 'EXECUTED', 'FAILED', 'RETRY_SCHEDULED', 'PAUSED', 'COMPLETED'];
+
+export const credibility = [
+  { icon: CheckCircle2, label: 'Strict schemas', value: 'Fail closed' },
+  { icon: TimerReset, label: 'Execution model', value: 'Deterministic' },
+  { icon: Fingerprint, label: 'Every action', value: 'Attributed' },
+];
